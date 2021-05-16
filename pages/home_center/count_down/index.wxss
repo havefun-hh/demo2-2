@@ -1,0 +1,81 @@
+/* miniprogram/pages/home_center/common_panel/index.js.wxss */
+
+.common-panel-backgroud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+	height: 320px;
+	background-color: #323535;
+}
+
+.colon {
+  display: inline-block;
+  margin: 0 4px;
+  color: #ee0a24;
+}
+
+.circle-block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #a8a8ac;
+  bottom: 0;
+}
+
+.button-panel-block{
+  display: flex;
+  align-content: center;
+  flex-direction: column-reverse;
+  background-color: #6f756e;
+}
+
+.count-down .van-count-down{
+  display: flex;
+  justify-content: center;
+  font-size: 70rpx;
+  padding: 30rpx;
+  color: #99ffcc;
+}
+
+.add-button{
+  position: absolute;
+  bottom: 75px;
+  right: 25px;
+}
+
+.confirm-button{
+  position: relative;
+  display: flex;
+  align-self: center;
+  margin-top: 100px;
+}
+
+.item {
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  margin-right: 5px;
+  color: #fff;
+  font-size: 40px;
+  text-align: center;
+  background-color: #1989fa;
+  border-radius: 2px;
+}
+
+.datetime-picker .van-datetime-picker{
+  display: flex;
+  justify-content: center;
+}
+
+.van-grid-item{
+  color: #323535;
+  background-color: #6f756e;
+}

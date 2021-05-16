@@ -1,0 +1,34 @@
+<!--miniprogram/pages/home_center/switch/index.js.wxml-->
+<wxs src="./index.wxs" module="utils" />
+
+<view class="common-panel-backgroud" style="background:#323535;color:#ffffff;width:100%;height:100%">
+  <block></block>
+</view>
+<navbar device_name="{{device_name}}" bind:jumpTodeviceEditPage="jumpTodeviceEditPage" />
+
+<view class="common-panel-header">
+  <image class="{{titleItem.value?'bg-rotate':'bg-rotate-normal'}}" src="/image/power_on_rotate.png"></image>
+  <view class="common-panel-header-block">
+    <view class="kg_root" style="width: 399rpx; height: 1060rpx; display: flex; box-sizing: border-box; left: 0rpx; top: 0rpx">
+      <image class="dcImage" src="{{titleItem.value ? imgList.power : imgList.powerOff}}" bindtap="sendDp"></image>
+      <text class="dcLabel">插座已{{titleItem.value ? '开启' : '关闭'}}</text>
+    </view>
+  </view>
+</view>
+
+<view class="scroll-view">
+  <block wx:if="{{isRwDpListShow}}">
+    <block wx:for="{{rwDpList}}" wx:key="{{item.code}}" wx:for-item="item">
+      <block wx:if="{{item.type === 'Boolean'}}">
+        <Boolean model:isChecked="{{item.value}}" dpCode="{{item.code}}" dpName="{{item.name}}" bind:sendDp="sendDp" />
+      </block>
+    </block>
+  </block>
+</view>
+
+<van-tabbar active="{{ active }}" bind:change="onChange">
+  <van-tabbar-item icon="play-circle-o" bindtap='jumpToSwitchPage' style="background:#323535;">开关</van-tabbar-item>
+  <van-tabbar-item icon="underway" bindtap='jumpToTimingPage' style="background:#323535;">定时</van-tabbar-item>
+  <van-tabbar-item icon="replay" bindtap='jumpToCountdownPage' style="background:#323535;">倒计时</van-tabbar-item>
+  <van-tabbar-item icon="bar-chart-o" bindtap='jumpToStatisticsPage' style="background:#323535;">电量统计</van-tabbar-item>
+</van-tabbar>

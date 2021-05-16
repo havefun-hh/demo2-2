@@ -1,0 +1,125 @@
+/* miniprogram/pages/home_center/common_panel/index.js.wxss */
+
+.common-panel-backgroud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+	height: 320px;
+	background-color: #ffffff;
+}
+
+.background-panel{
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.total-panel{
+  z-index: 2;
+  margin-top: 80px;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.total-panel-block {
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.total-panel-dpValue{
+  z-index: 4;
+	width: 160px;
+  height: 65px;
+  text-align: center;
+	font-family: HelveticaNeue;
+	font-size: 60px;
+  line-height: 60px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+	color: #99ffcc;
+}
+
+.total-panel-dpValue-title{
+  z-index: 4;
+	width: 160px;
+  height: 45px;
+  margin-top: 16px;
+  text-align: center;
+	font-family: HelveticaNeue;
+	font-size: 10px;
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+	color: #99ffcc;
+}
+
+.block2{
+  z-index: 5;
+	width: 320px;
+  height: 40px;
+  text-align: center;
+  margin-top: 30px;
+}
+
+.block3{
+  z-index: 5;
+	width: 320px;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: -30px;
+  display: flex;
+  align-content: center;
+}
+
+.value2{
+  z-index: 5;
+	width: 80px;
+  height: 20px;
+  text-align: center;
+	font-size: 10px;
+  line-height: 20px;
+	color: #99ffcc;
+}
+
+.value3{
+  z-index: 5;
+	width: 80px;
+  height: 30px;
+  text-align: center;
+	font-size: 30px;
+  line-height: 30px;
+}
+
+.value2-title{
+  z-index: 4;
+	width: 20px;
+  height: 12px;
+  text-align: center;
+	font-family: HelveticaNeue;
+	font-size: 10px;
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+	color: #05e005;
+}
+
+.wrap {
+  position: relative;
+  margin-top: 10px;
+}
+
+.wrap canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

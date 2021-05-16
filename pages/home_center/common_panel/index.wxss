@@ -1,0 +1,312 @@
+/* miniprogram/pages/home_center/common_panel/index.js.wxss */
+
+.common-panel-backgroud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+	height: 320px;
+	background-color: #27c3d9;
+}
+
+.common-panel-header {
+  z-index: 1;
+  width: 100%;
+  height: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.common-panel-header-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.common-panel-header-dpName {
+	width: 160px;
+  height: 45px;
+  text-align: center;
+	font-family: HelveticaNeue;
+	font-size: 40px;
+  line-height: 40px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+	color: #fff;
+}
+
+.common-panel-header-dpValue {
+	width: 135px;
+	height: 90px;
+  font-family: DINCondensed-Bold;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+	font-size: 60px;
+	color: #fff;
+}
+
+.roDpItem-normal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 54px;
+  padding: 16px 2px;
+}
+
+.roDpItem-normal:not(:last-child) {
+  border-right: solid 1px #d6d6d6;
+}
+
+.roDpItem-two {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 54px;
+  padding: 16px 33px;
+}
+
+.roDpItem-two:not(:last-child) {
+  border-right: solid 1px #d6d6d6;
+}
+
+.roDpItem-one {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 64px;
+  padding: 20px 24px;
+  background-color: #fff;
+  border-radius: 14px;
+}
+
+.roDpItem-dpName {
+  flex: 1;
+  width: 115px;
+  text-align: center;
+  font-family: PingFangSC-Regular;
+  font-size: 12px;
+  line-height: 24px;
+  color: rgba(80, 80, 80, 0.5);
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.roDpItem-status {
+  width: 115px;
+  text-align: center;
+  font-family: PingFangSC-Semibold;
+  font-size: 18px;
+  line-height: 24px;
+  color: #505050;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.statuslist {
+  padding-top: 16px;
+  display: flex;
+  justify-content: center;
+  line-height: 12px;
+  flex-wrap: wrap;
+}
+
+.scroll-view {
+  padding: 16px 8px;
+  width: auto;
+  height: 100%;
+}
+
+.wave{
+  width:750rpx;
+  height:100rpx;
+  mix-blend-mode: screen;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.tips{
+  margin-top: -50rpx;
+  text-align: center;
+  color: #1101f1;
+  z-index: 100;
+}
+
+/* run */
+.bg-rotate{
+	width: 386rpx;
+	height: 408rpx;
+	position: absolute;
+	left: 182rpx;
+  top: 220rpx;
+  z-index: 9;
+  -webkit-animation:myRotate 10s linear infinite;
+  animation:myRotate 10s linear infinite;
+}
+.bg-rotate-normal{
+  width: 386rpx;
+	height: 408rpx;
+	position: absolute;
+	left: 182rpx;
+  top: 220rpx;
+  z-index: 9;
+}
+@-webkit-keyframes myRotate{
+  0%{ -webkit-transform: rotate(0deg);}
+  50%{ -webkit-transform: rotate(180deg);}
+  100%{ -webkit-transform: rotate(360deg);}
+}
+@keyframes myRotate{
+  0%{ -webkit-transform: rotate(0deg);}
+  50%{ -webkit-transform: rotate(180deg);}
+  100%{ -webkit-transform: rotate(360deg);}
+}
+
+/* cube */
+.tui-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.tui-cube-box {
+  width: 60px;
+  height: 60px;
+  position: relative;
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  animation: tui-go 10s linear infinite;
+  z-index: 99;
+}
+
+@keyframes tui-go {
+  0% {
+    -webkit-transform: rotateX(0) rotateY(0);
+    transform: rotateX(0) rotateY(0);
+  }
+
+  100% {
+    -webkit-transform: rotateX(360deg) rotateY(360deg);
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
+
+.tui-cube {
+  width: 60px;
+  height: 60px;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 24rpx;
+  color: #fff;
+  text-align: center;
+  /* word-break: break-all;
+  word-wrap: break-word; */
+}
+
+.tui-cube-1 {
+  background-color: #fff;
+  -webkit-transform: rotateY(90deg) translateZ(-30px);
+  transform: rotateY(90deg) translateZ(-30px);
+  color: #333 !important;
+}
+
+.tui-cube-2 {
+  background-color: #8a5966;
+  -webkit-transform: rotateY(90deg) translateZ(30px);
+  transform: rotateY(90deg) translateZ(30px);
+}
+
+.tui-cube-3 {
+  background-color: #5c8dff;
+  -webkit-transform: rotateX(90deg) translateZ(30px);
+  transform: rotateX(90deg) translateZ(30px);
+}
+
+.tui-cube-4 {
+  background-color: #ed3f14;
+  -webkit-transform: rotateX(90deg) translateZ(-30px);
+  transform: rotateX(90deg) translateZ(-30px);
+}
+
+.tui-cube-5 {
+  background-color: #ff7900;
+  -webkit-transform: translateZ(30px);
+  transform: translateZ(30px);
+}
+
+.tui-cube-6 {
+  background-color: #19be6b;
+  -webkit-transform: translateZ(-30px);
+  transform: translateZ(-30px);
+}
+
+/* progress */
+.cu-progress{
+  overflow: hidden;
+  height: 28rpx;
+  background-color: #ebeef5;
+  display: inline-flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20rpx;
+}
+.radius {
+  border-radius: 6rpx;
+}
+.cu-progress view {
+  width: 0;
+  height: 100%;
+  align-items: center;
+  display: flex;
+  justify-items: flex-end;
+  justify-content: space-around;
+  font-size: 20rpx;
+  color: var(--white);
+  transition: width 0.6s ease;
+}
+.cu-progress.striped view {
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  background-size: 72rpx 72rpx;
+}
+.cu-progress.active view {
+  animation: progress-stripes 2s linear infinite;
+}
+.cu-progress.text-progress {
+	padding-right: 60rpx;
+}
+@keyframes progress-stripes {
+	from {
+		background-position: 72rpx 0;
+	}
+
+	to {
+		background-position: 0 0;
+	}
+}
+.bg-red {
+  background-color: var(--red);
+  color: var(--white);
+}
+.bg-olive {
+  background-color: var(--olive);
+  color: var(--white);
+}
+.bg-cyan {
+  background-color: var(--cyan);
+  color: var(--white);
+}
+.bg-orange{
+  background-color: var(--orange);
+  color: var(--white);
+}

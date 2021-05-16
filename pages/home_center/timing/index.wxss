@@ -1,0 +1,51 @@
+/* miniprogram/pages/home_center/common_panel/index.js.wxss */
+
+.common-panel-backgroud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+	height: 320px;
+	background-color: #27c3d9;
+}
+
+.common-panel-header {
+  z-index: 1;
+  width: 100%;
+  height: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.common-panel-header-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.scroll-view {
+  padding: 16px 8px;
+  width: auto;
+  height: 100%;
+}
+
+.block{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.add-button{
+  position: absolute;
+  bottom: 75px;
+  right: 25px;
+}
+
+.confirm-button{
+  position: relative;
+  display: flex;
+  align-self: center;
+  margin-top: 100px;
+}

@@ -1,0 +1,56 @@
+<!--miniprogram/pages/home_center/switch/index.js.wxml-->
+<wxs src="./index.wxs" module="utils" />
+
+<view class="common-panel-backgroud" style="background:#323535; width:100%; height:100%"></view>
+<navbar device_name="{{device_name}}" bind:jumpTodeviceEditPage="jumpTodeviceEditPage" />
+
+<view class="background-panel" style="width:320px; height:153px; background-position:center; background-image:url(../../../image/图片3.png); background-repeat:no-repeat">
+  <view class="total-panel">
+    <view class="total-panel-block">
+      <view class="total-panel-dpValue">{{ today_electrics }}</view>
+      <view class="total-panel-dpValue-title">今日电量（KWh）</view>
+    </view>
+  </view>
+</view>
+
+<van-row  class="block2">
+  <van-col span="6" class="value2">{{ current_A }}</van-col>
+  <van-col span="6" class="value2">{{ current_V / 10 }}</van-col>
+  <van-col span="6" class="value2">{{ current_P / 10 }}</van-col>
+  <van-col span="6" class="value2">{{ total_electrics }}</van-col>
+  <van-col span="6" class="value2">当前电流（mA）</van-col>
+  <van-col span="6" class="value2">当前电压（V）</van-col>
+  <van-col span="6" class="value2">当前功率（W）</van-col>
+  <van-col span="6" class="value2">总电量（KWh）</van-col>
+</van-row>
+
+<van-row class="block3">
+  <van-col style="position: relative; left: 40px">
+    <van-button color="#6f756e" type="primary" url="" class="value3" bindtap="showWeek">最近一周</van-button>
+  </van-col>
+  <van-col style="position: relative; left: 100px">
+    <van-button color="#6f756e" type="primary" url="" class="value3" bindtap="showMonth">最近一月</van-button>
+  </van-col>
+</van-row>
+
+<!-- <van-grid column-num="4">
+  <van-grid-item text="{{ current_A }}"/>
+  <van-grid-item text="{{ current_V }}"/>
+  <van-grid-item text="{{ current_P }}"/>
+  <van-grid-item text="{{ total_electrics }}"/>
+  <van-grid-item text="当前电流（mA）"/>
+  <van-grid-item text="当前电压（V）"/>
+  <van-grid-item text="当前功率（W）"/>
+  <van-grid-item text="总电量（KWh）"/>
+</van-grid> -->
+
+<view class="wrap" style="width: 320px; height: 200px;">
+  <canvas canvas-id="chart" style="width: 320px; height: 200px;"></canvas>
+</view>  
+
+<van-tabbar active="{{ active }}" bind:change="onChange">
+  <van-tabbar-item icon="play-circle-o" bindtap='jumpToSwitchPage' style="background:#323535;">开关</van-tabbar-item>
+  <van-tabbar-item icon="underway" bindtap='jumpToTimingPage' style="background:#323535;">定时</van-tabbar-item>
+  <van-tabbar-item icon="replay" bindtap='jumpToCountdownPage' style="background:#323535;">倒计时</van-tabbar-item>
+  <van-tabbar-item icon="bar-chart-o" bindtap='jumpToStatisticsPage' style="background:#323535;">电量统计</van-tabbar-item>
+</van-tabbar>

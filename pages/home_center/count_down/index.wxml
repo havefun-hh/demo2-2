@@ -1,0 +1,95 @@
+<!--miniprogram/pages/home_center/switch/index.js.wxml-->
+<wxs src="./index.wxs" module="utils" />
+
+<view class="common-panel-backgroud" style="background:#a8a8ac;color:#ffffff"></view>
+<navbar device_name="{{device_name}}" bind:jumpTodeviceEditPage="jumpTodeviceEditPage" />
+
+<van-toast id="van-toast" />
+
+<block wx:if="{{show_setting}}">
+  <van-popup show="{{ show_setting }}" round position="bottom" custom-style="height: 50%;" bind:close="onClose">
+    <van-cell title="选择时间" is-link bind:click="showTimeSettingPopup"/>
+    <van-cell title="选择开关" is-link bind:click="showSwitchSettingPopup"/>
+    <van-button type="primary" class="confirm-button" bindtap="confirmButton">确认</van-button>
+  </van-popup>
+</block>
+
+<block wx:if="{{show_time_setting}}">
+  <van-popup show="{{ show_time_setting }}" round position="bottom" custom-style="height: 50%;" bind:close="onClose">
+    <van-picker 
+      id="datetime-picker"
+      columns="{{ columns_date }}" 
+      show-toolbar
+      title="选择时间"
+      confirm-button-text="确认"
+      cancel-button-text="取消"
+      bind:cancel="timeCancel"
+      bind:confirm="timeConfirm"
+    />
+  </van-popup>
+</block>
+
+<block wx:if="{{show_switch_setting}}">
+  <van-popup show="{{ show_switch_setting }}" round position="bottom" custom-style="height: 50%;" bind:close="onClose">
+    <van-picker
+      id="switch-picker"
+      columns="{{ columns_switch }}"
+      default-index="{{ 0 }}"
+      show-toolbar
+      title="选择开关"
+      confirm-button-text="确认"
+      cancel-button-text="取消"
+      bind:cancel="switchCancel"
+      bind:confirm="switchConfirm"
+    />
+  </van-popup>
+</block>
+
+<!-- <view class="circle-block">
+  <van-circle value="{{ time / (1000) }}" speed="1" text="倒计时" stroke-width="10" size="200" class="power" />
+</view> -->
+<!-- <view class="circle-block">
+  <van-circle value="{{ time / (1000) }}" speed="1" stroke-width="10" size="200" class="power">
+    <van-count-down class="count-down" millisecond time="{{ time }}" auto-start="{{ false }}" format="HH:mm:ss:SSS" bind:finish="finished" />
+  </van-circle>
+</view> -->
+<view class="circle-block">
+  <van-circle value="{{ time_circle_value }}" speed="{{ time_circle_speed }}" clockwise="{{ false }}" layer-color="#1989fa" color="#fff" stroke-width="10" size="200" class="power">
+    <van-count-down class="count-down" time="{{ time_countdown }}" auto-start="{{ false }}" bind:finish="finished">
+      <text class="item">{{ timeData.hours }}</text>
+      <text class="item">{{ timeData.minutes }}</text>
+      <text class="item">{{ timeData.seconds }}</text>
+    </van-count-down>
+  </van-circle>
+</view>
+
+<van-grid clickable column-num="3" class="button-panel-block">
+  <van-grid-item text="开始" icon="play-circle-o" bindclick="start" class="van-grid-item"/>
+  <van-grid-item text="暂停" icon="pause-circle-o" bindclick="pause" class="van-grid-item"/>
+  <van-grid-item text="重置" icon="replay" bindclick="reset" class="van-grid-item"/>
+</van-grid>
+
+<!-- <van-popup show="{{ show }}" round position="bottom" overlay="false" custom-style="height: 50%;" bind:close="onClose">
+  <van-datetime-picker
+    id="datetime-picker"
+    title="选择时间"
+    type="time"
+    value="{{ currentTime }}"
+    min-hour="{{ minHour }}"
+    max-hour="{{ maxHour }}"
+    visible-item-count="6"
+    formatter="{{ formatter }}"
+    bind:change="buttonChange"
+    bind:cancel="buttonCancel"
+    bind:confirm="buttonConfirm"
+  />
+</van-popup> -->
+
+<van-button round type="info" icon="add-o" class="add-button" bindtap="showSettingPopup"></van-button>
+
+<van-tabbar active="{{ active }}" bind:change="onChange">
+  <van-tabbar-item icon="play-circle-o" bindtap='jumpToSwitchPage' style="background:#323535;">开关</van-tabbar-item>
+  <van-tabbar-item icon="underway" bindtap='jumpToTimingPage' style="background:#323535;">定时</van-tabbar-item>
+  <van-tabbar-item icon="replay" bindtap='jumpToCountdownPage' style="background:#323535;">倒计时</van-tabbar-item>
+  <van-tabbar-item icon="bar-chart-o" bindtap='jumpToStatisticsPage' style="background:#323535;">电量统计</van-tabbar-item>
+</van-tabbar>

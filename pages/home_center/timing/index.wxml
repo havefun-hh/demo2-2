@@ -1,0 +1,71 @@
+<!--miniprogram/pages/home_center/switch/index.js.wxml-->
+<wxs src="./index.wxs" module="utils" />
+
+<view class="common-panel-backgroud" style="background:#a8a8ac;color:#ffffff;width:100%;height:100%"></view>
+<navbar device_name="{{device_name}}" bind:jumpTodeviceEditPage="jumpTodeviceEditPage" />
+
+<van-toast id="van-toast" />
+
+<block wx:if="{{show_setting}}">
+  <van-popup show="{{ show_setting }}" round position="bottom" custom-style="height: 50%;" bind:close="onClose">
+    <van-cell title="选择时间" is-link bind:click="showTimeSettingPopup"/>
+    <van-cell title="选择开关" is-link bind:click="showSwitchSettingPopup"/>
+    <van-button type="primary" class="confirm-button" bindtap="confirmButton">确认</van-button>
+  </van-popup>
+</block>
+
+<!-- <block wx:if="{{show_time_setting}}">
+  <van-popup show="{{ show_time_setting }}" round position="bottom" custom-style="height: 50%;" bind:close="onClose">
+    <van-datetime-picker
+      id="datetime-picker"
+      title="选择时间"
+      type="date"
+      value="{{ currentDate }}"
+      bind:input="onInput"
+      min-date="{{ minDate }}"
+      formatter="{{ formatter }}"
+      visible-item-count="6"
+      bind:cancel="timeCancel"
+      bind:confirm="timeConfirm"
+    />
+  </van-popup>
+</block> -->
+<block wx:if="{{show_time_setting}}">
+  <van-popup show="{{ show_time_setting }}" round position="bottom" custom-style="height: 50%;" bind:close="onClose">
+    <van-picker 
+      id="datetime-picker"
+      columns="{{ columns_date }}" 
+      show-toolbar
+      title="选择时间"
+      confirm-button-text="确认"
+      cancel-button-text="取消"
+      bind:cancel="timeCancel"
+      bind:confirm="timeConfirm"
+    />
+  </van-popup>
+</block>
+
+<block wx:if="{{show_switch_setting}}">
+  <van-popup show="{{ show_switch_setting }}" round position="bottom" custom-style="height: 50%;" bind:close="onClose">
+    <van-picker
+      id="switch-picker"
+      columns="{{ columns_switch }}"
+      default-index="{{ 0 }}"
+      show-toolbar
+      title="选择开关"
+      confirm-button-text="确认"
+      cancel-button-text="取消"
+      bind:cancel="switchCancel"
+      bind:confirm="switchConfirm"
+    />
+  </van-popup>
+</block>
+
+<van-button round type="info" icon="add-o" class="add-button" bindtap="showSettingPopup"></van-button>
+
+<van-tabbar active="{{ active }}" bind:change="onChange">
+  <van-tabbar-item icon="play-circle-o" bindtap='jumpToSwitchPage' style="background:#323535;">开关</van-tabbar-item>
+  <van-tabbar-item icon="underway" bindtap='jumpToTimingPage' style="background:#323535;">定时</van-tabbar-item>
+  <van-tabbar-item icon="replay" bindtap='jumpToCountdownPage' style="background:#323535;">倒计时</van-tabbar-item>
+  <van-tabbar-item icon="bar-chart-o" bindtap='jumpToStatisticsPage' style="background:#323535;">电量统计</van-tabbar-item>
+</van-tabbar>

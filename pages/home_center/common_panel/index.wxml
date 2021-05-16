@@ -1,0 +1,83 @@
+<!--miniprogram/pages/home_center/common_panel/index.js.wxml-->
+<wxs src="./index.wxs" module="utils" />
+
+<!-- <image class="common-panel-backgroud" src="{{forest}}" /> -->
+<view class="common-panel-backgroud">
+  <image class="wave" src="https://raw.githubusercontent.com/weilanwl/ColorUI/master/demo/images/wave.gif"></image>
+</view>
+<navbar device_name="{{device_name}}" bind:jumpTodeviceEditPage="jumpTodeviceEditPage" />
+
+<view class="common-panel-header">
+  <image class="{{titleItem.value?'bg-rotate':'bg-rotate-normal'}}" src="/image/bg-steps.png"></image>
+  <view class="common-panel-header-block">
+    <view class="common-panel-header-dpName">{{titleItem.name}}</view>
+    <view class="common-panel-header-dpValue">{{titleItem.value?'开':'关'}}</view>
+  </view>
+</view>
+
+<view class="tips">插座已{{titleItem.value?'开启':'关闭'}}</view>
+
+<block wx:if="{{isRoDpListShow}}">
+  <view class="statuslist">
+    <block wx:for="{{roDpList}}" wx:key="{{item.code}}" wx:for-item="item" wx:for-index='idx'>
+      <view class="{{utils.countDpItem(roDpListLength,idx)}}">
+        <view class="roDpItem-dpName">{{item.code}}</view>
+        <view class="roDpItem-status">{{item.value}}</view>
+      </view>
+    </block>
+  </view>
+</block>
+
+<view class="scroll-view">
+  <block wx:if="{{isRwDpListShow}}">
+    <block wx:for="{{rwDpList}}" wx:key="{{item.code}}" wx:for-item="item">
+      <block wx:if="{{item.type === 'Boolean' && active === 0}}">
+        <Boolean model:isChecked="{{item.value}}" dpCode="{{item.code}}" dpName="{{item.name}}" bind:sendDp="sendDp" />
+      </block>
+      <block wx:if="{{item.type === 'Integer' && active === 2}}">
+        <Integer model:value="{{item.value}}" values="{{item.values}}" dpCode="{{item.code}}" dpName="{{item.name}}"
+          bind:sendDp="sendDp" />
+      </block>
+      <block wx:if="{{item.type === 'Enum'}}">
+        <Enum model:value="{{item.value}}" values="{{item.values}}" dpCode="{{item.code}}" dpName="{{item.name}}"
+          bind:sendDp="sendDp" />
+      </block>
+    </block>
+  </block>
+  <view class="integer-container">
+    <block wx:if="{{active === 0}}">
+      <view class="integer-name">电压</view>
+      <view class="cu-progress radius striped active">
+        <view class="bg-red" style="width:100%;">{{voltage}}V</view>
+      </view>
+      <view class="integer-name">电流</view>
+      <view class="cu-progress radius striped active">
+        <view class="bg-cyan" style="width:80%;">{{0.136}}A</view>
+      </view>
+      <view class="integer-name">功率</view>
+      <view class="cu-progress radius striped active">
+        <view class="bg-orange" style="width:30%;">{{30}}W</view>
+      </view>
+      <view class="integer-name"></view>
+    </block>
+  </view>
+</view>
+
+<!-- <view class="tui-flex">
+    <view class="tui-cube-box" bindtap='log'>
+      <view class="tui-cube tui-cube-1">涂❤鸦</view>
+      <view class="tui-cube tui-cube-2">{{version}}</view>
+      <view class="tui-cube tui-cube-3">涂❤鸦</view>
+      <view class="tui-cube tui-cube-5">涂❤鸦</view>
+      <view class="tui-cube tui-cube-4">{{version}}</view>
+      <view class="tui-cube tui-cube-6">{{version}}</view>
+    </view>
+</view> -->
+
+<van-tabbar active="{{ active }}" bind:change="onChange">
+  <van-tabbar-item icon="play-circle-o">开关</van-tabbar-item>
+  <van-tabbar-item icon="underway">定时</van-tabbar-item>
+  <van-tabbar-item icon="replay">倒计时</van-tabbar-item>
+  <van-tabbar-item icon="bar-chart-o">电量统计</van-tabbar-item>
+</van-tabbar>
+
