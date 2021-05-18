@@ -2,7 +2,8 @@
 import { getDevFunctions, getDeviceDetails, deviceControl } from '../../../utils/api/device-api'
 import wxMqtt from '../../../utils/mqtt/wxMqtt'
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
-import { addTimingTask } from '../../../utils/api/device-api'
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
+import { addTimingTask, getTimingTask } from '../../../utils/api/device-api'
 
 
 Page({
@@ -27,6 +28,7 @@ Page({
     show_setting: false,
     show_time_setting: false,
     show_switch_setting: false,
+    show_time_task: false,
     currentDate: new Date().getTime(),
     minDate: new Date().getTime(),
     formatter(type, value) {
@@ -45,7 +47,7 @@ Page({
         className: '月',
       },
       {
-        values: ['01日', '02日', '03日', '04日', '05日', '06日', '07日', '08日', '09日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17', '18', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日'],
+        values: ['01日', '02日', '03日', '04日', '05日', '06日', '07日', '08日', '09日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日'],
         className: '日',
         defaultIndex: 2,
       },
@@ -62,6 +64,8 @@ Page({
     ],
     switch_status: false,
     timeTask: '',
+    time_task_title: '',
+    time_task_content: '',
   },
 
   // Popup 弹出层
@@ -89,11 +93,39 @@ Page({
 
   timeConfirm: function () {
     Toast('确认');
+    let { device_id, timeTask, switch_status } = this.data
     var datetime_picker = this.selectComponent('#datetime-picker')
-    let timeTask = this.data
     const datetime = datetime_picker.getValues()
     console.log(datetime)
     timeTask = datetime[0].slice(0,2) + datetime[1].slice(0,2) + datetime[2].slice(0,2) + datetime[3].slice(0,2)
+
+    let dt = new Date()
+    let year = dt.getFullYear()  //年
+    let month = datetime[0].slice(0,2)
+    let day = datetime[1].slice(0,2)
+    // if (dt.getMonth() + 1 in [11, 12]) {
+    //   month = (dt.getMonth() + 1).toString();
+    // } else {
+    //   month = '0' + (dt.getMonth() + 1).toString();
+    // }
+    // if (dt.getDate() < 10) {
+    //   day = '0' + (dt.getDate()).toString();
+    // } else {
+    //   day = (dt.getDate()).toString();
+    // }
+    let customDate = year.toString() + month + day
+    let customTime = datetime[2].slice(0,2) + ":" + datetime[3].slice(0,2)
+    console.log(customDate, customTime)
+    // let loops = "0000000"
+    // let category = "test"
+    // let timezone_id = "Asia/Shanghai"
+    // let time_zone = "+8:00"
+    // const timingTaskRes = addTimingTask(device_id,loops,category,timezone_id,time_zone,customDate,customTime)
+    // const timingTaskRes = addTimingTask(device_id, switch_status, customDate, customTime)
+    // console.log(timingTaskRes)
+    // const timingTaskRes = addTimingTask(device_id, customDate, customTime)
+    // console.log(timingTaskRes)
+
     this.setData({ show_time_setting: false, timeTask });
   },
   
@@ -121,38 +153,180 @@ Page({
     this.setData({ show_switch_setting: false });
   },
 
-  confirmButton: function() {
+  async confirmButton() {
     Toast('设置成功')
-    let { device_id, timeTask } = this.data
+    let { device_id, timeTask, switch_status, show_time_task, time_task_title, time_task_content } = this.data
     let dt = new Date()
     let year = dt.getFullYear()  //年
     let customDate = year + timeTask.slice(0,4)
     let customTime = timeTask.slice(4,6) + ":" + timeTask.slice(6,8)
     console.log(customDate, customTime)
-    // const timingTaskRes = addTimingTask(device_id, customDate, customTime)
-    // console.log(timingTaskRes)
-    this.setData({ show_setting: false, show_time_setting: false, show_switch_setting: false });
+    time_task_title = customDate.slice(0,4) + "-" + parseInt(customDate.slice(4,6)).toString() + "-" + parseInt(customDate.slice(6,8)).toString() + "  " + customTime
+    if ( switch_status ) {
+      time_task_content = "开"
+    } else {
+      time_task_content = "关"
+    }
+    const timingTaskRes = await addTimingTask(device_id, switch_status, customDate, customTime)
+    console.log(timingTaskRes)
+    this.setData({ show_setting: false, show_time_setting: false, show_switch_setting: false, show_time_task: true, time_task_title, time_task_content });
+  },
+
+  // test
+  async get() {
+    let { device_id } = this.data
+    const res = await getTimingTask(device_id)
+    console.log(res)
+  },
+
+  //关闭定时任务
+  timeTaskClose(event) {
+    const { position, instance } = event.detail;
+    switch (position) {
+      case 'left':
+      case 'cell':
+        instance.close();
+        break;
+      case 'right':
+        Dialog.confirm({
+          message: '确定删除吗？',
+        }).then(() => {
+          instance.close();
+        });
+        break;
+    }
+  },
+
+  dialogConfirm(){
+    this.setData({ show_time_task: false })
+  },
+  
+  // tabbar 切换
+  onChange(e) {
+    this.setData({
+      active: e.detail
+    })
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    const { device_id } = options
+    this.setData({ device_id })
+
+    // mqtt消息监听
+    wxMqtt.on('message', (topic, newVal) => {
+      const { status } = newVal
+      console.log(newVal)
+      this.updateStatus(status)
+    })
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: async function () {
-    
+    const { device_id } = this.data
+    const [{ name, status, icon }, { functions = [] }] = await Promise.all([
+      getDeviceDetails(device_id),
+      getDevFunctions(device_id),
+    ]);
+
+    const { roDpList, rwDpList } = this.reducerDpList(status, functions)
+
+    // 获取头部展示功能点信息
+    let titleItem = {
+      name: '',
+      value: '',
+    };
+    if (Object.keys(roDpList).length > 0) {
+      let keys = Object.keys(roDpList)[0];
+      titleItem = roDpList[keys];
+    } else {
+      let keys = Object.keys(rwDpList)[0];
+      titleItem = rwDpList[keys];
+    }
+
+    const roDpListLength = Object.keys(roDpList).length
+    const isRoDpListShow = Object.keys(roDpList).length > 0
+    const isRwDpListShow = Object.keys(rwDpList).length > 0
+
+    this.setData({ titleItem, roDpList, rwDpList, device_name: name, isRoDpListShow, isRwDpListShow, roDpListLength, icon })
   },
 
-  // tabbar 切换
-  onChange(e) {
-    this.setData({
-      active: e.detail
+  // 分离只上报功能点，可上报可下发功能点
+  reducerDpList: function (status, functions) {
+    // 处理功能点和状态的数据
+    let roDpList = {};
+    let rwDpList = {};
+    if (status && status.length) {
+      status.map((item) => {
+        const { code, value } = item;
+        let isExit = functions.find(element => element.code == code);
+        if (isExit) {
+          let rightvalue = value
+          // 兼容初始拿到的布尔类型的值为字符串类型
+          if (isExit.type === 'Boolean') {
+            rightvalue = value == 'true'
+          }
+
+          rwDpList[code] = {
+            code,
+            value: rightvalue,
+            type: isExit.type,
+            values: isExit.values,
+            name: isExit.name,
+          };
+        } else {
+          roDpList[code] = {
+            code,
+            value,
+            name: code,
+          };
+        }
+      });
+    }
+    return { roDpList, rwDpList }
+  },
+
+  sendDp: async function (e) {
+    const { dpCode, value } = e.detail
+    const { device_id } = this.data
+
+    const { success } = await deviceControl(device_id, dpCode, value)
+  },
+
+  updateStatus: function (newStatus) {
+    let { roDpList, rwDpList, titleItem } = this.data
+
+    newStatus.forEach(item => {
+      const { code, value } = item
+
+      if (typeof roDpList[code] !== 'undefined') {
+        roDpList[code]['value'] = value;
+      } else if (rwDpList[code]) {
+        rwDpList[code]['value'] = value;
+      }
     })
+
+    // 更新titleItem
+    if (Object.keys(roDpList).length > 0) {
+      let keys = Object.keys(roDpList)[0];
+      titleItem = roDpList[keys];
+    } else {
+      let keys = Object.keys(rwDpList)[0];
+      titleItem = rwDpList[keys];
+    }
+ 
+    this.setData({ titleItem, roDpList: { ...roDpList }, rwDpList: { ...rwDpList } })
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+    // var datetimePicker = this.selectComponent('.van-datetime-picker');
   },
 
   jumpTodeviceEditPage: function(){

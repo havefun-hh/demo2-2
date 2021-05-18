@@ -215,18 +215,32 @@ export const addTimingTask = (device_id,value,custonmDate,customTime) => {
           {
               "functions":[
                   {
-                      "code":"switch_1",
-                      value
-                  },
-                  {
-                    "code":"switch_vertical",
-                      "value":true
+                      "code":"switch",
+                      "value":value
                   }
+                  // {
+                  //   "code":"switch_vertical",
+                  //     "value":true
+                  // }
               ],
               "date":custonmDate,
               "time":customTime
           }
       ]
+      }
+    }
+  })
+}
+
+//查询定时任务
+export const getTimingTask = (device_id) => {
+  return request({
+    name: 'ty-service',
+    data: {
+      action: "timer.listByCategory",
+      "params": {
+        device_id,
+        "category":"test",
       }
     }
   })

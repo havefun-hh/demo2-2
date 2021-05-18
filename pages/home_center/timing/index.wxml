@@ -5,6 +5,17 @@
 <navbar device_name="{{device_name}}" bind:jumpTodeviceEditPage="jumpTodeviceEditPage" />
 
 <van-toast id="van-toast" />
+<van-dialog id="van-dialog" bind:confirm="dialogConfirm"/>
+
+<block wx:if="{{show_time_task}}">
+  <van-swipe-cell id="swipe-cell" right-width="{{ 65 }}" async-close bind:close="timeTaskClose">
+    <van-cell-group>
+      <van-cell title="{{time_task_title}}" value="{{time_task_content}}" />
+    </van-cell-group>
+    <view slot="right" class="del" >删除</view>
+  </van-swipe-cell>
+</block>
+
 
 <block wx:if="{{show_setting}}">
   <van-popup show="{{ show_setting }}" round position="bottom" custom-style="height: 50%;" bind:close="onClose">
@@ -61,6 +72,7 @@
   </van-popup>
 </block>
 
+<van-button round type="primary" icon="add-o" class="add-button-2" bindtap="get"></van-button>
 <van-button round type="info" icon="add-o" class="add-button" bindtap="showSettingPopup"></van-button>
 
 <van-tabbar active="{{ active }}" bind:change="onChange">

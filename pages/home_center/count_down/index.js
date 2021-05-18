@@ -2,7 +2,7 @@
 import { getDevFunctions, getDeviceDetails, deviceControl } from '../../../utils/api/device-api'
 import wxMqtt from '../../../utils/mqtt/wxMqtt'
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
-import { addTimingTask } from '../../../utils/api/device-api'
+import { addTimingTask, getTimingTask } from '../../../utils/api/device-api'
 
 
 Page({
@@ -80,6 +80,13 @@ Page({
     })
   },
 
+  // test
+  async get() {
+    let { device_id } = this.data
+    const res = await getTimingTask(device_id)
+    console.log(res)
+  },
+
   // countDown动作
   start() {
     let { device_id, timeTask, switch_status, time_countdown } = this.data
@@ -108,6 +115,8 @@ Page({
     // const timingTaskRes = addTimingTask(device_id,loops,category,timezone_id,time_zone,customDate,customTime)
     // const timingTaskRes = addTimingTask(device_id, switch_status, customDate, customTime)
     // console.log(timingTaskRes)
+    const timingTaskRes = addTimingTask(device_id, switch_status, customDate, customTime)
+    console.log(timingTaskRes)
     const countDown = this.selectComponent('.count-down');
 
     let time_circle_speed = 100 / (time_countdown/1000)
@@ -123,7 +132,7 @@ Page({
     let remain_time = countDown.getRemain();
     let time_circle_value = time_countdown - remain_time;
     console.log(time_countdown, remain_time, time_circle_value)
-    // let time_circle_speed = time_circle_value / 1000 / 100  //速度应设为0，但是设成0后有bug速度变得特别快，因此取一个特别小的数代替0
+    // let time_circle_speed = 0  //速度应设为0，但是设成0后有bug速度变得特别快，因此取一个特别小的数代替0
     let time_circle_speed = 0.001
     console.log(time_circle_speed, time_circle_value)
     this.setData({ time_circle_speed, time_circle_value })

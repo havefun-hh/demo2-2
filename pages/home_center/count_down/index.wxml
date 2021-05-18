@@ -85,6 +85,7 @@
   />
 </van-popup> -->
 
+<van-button round type="primary" icon="add-o" class="add-button-2" bindtap="get"></van-button>
 <van-button round type="info" icon="add-o" class="add-button" bindtap="showSettingPopup"></van-button>
 
 <van-tabbar active="{{ active }}" bind:change="onChange">

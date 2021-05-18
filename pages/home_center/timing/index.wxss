@@ -43,9 +43,22 @@
   right: 25px;
 }
 
+.add-button-2{
+  position: absolute;
+  bottom: 75px;
+  left: 25px;
+}
+
 .confirm-button{
   position: relative;
   display: flex;
   align-self: center;
   margin-top: 100px;
+}
+
+.del{
+  display: flex;
+  align-content: center;
+  color: #fff;
+  background-color: #ec1b1b;
 }
